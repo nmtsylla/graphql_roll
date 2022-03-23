@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_23_220715) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_23_221605) do
+  create_table "dices", force: :cascade do |t|
+    t.integer "value"
+    t.string "face"
+    t.integer "roll_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["roll_id"], name: "index_dices_on_roll_id"
+  end
+
   create_table "rolls", force: :cascade do |t|
     t.float "total"
     t.datetime "rolled_at", default: "2022-03-23 22:09:09"
@@ -18,4 +27,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_23_220715) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "dices", "rolls"
 end

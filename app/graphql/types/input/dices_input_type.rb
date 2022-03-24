@@ -3,19 +3,17 @@ module Types
     class DicesInputType < Types::BaseScalar
 
       def self.coerce_input(input_value, context)
-        re = Regexp.new('(-?)(\d+)(d|D)(\d+)').freeze
+        re = Regexp.new('^((\d+)(d|D)(\d+)([+]*))+').freeze
 
         if input_value.is_a?(String) and re =~ input_value
-           dice = input_value.downcase.split('d')
-          [{'value':  dice[0].to_i, 'face': "d"+dice[1]}]
+           input_value
         else
           raise GraphQL::CoercionError, "#{input_value.inspect} is not a valid dices"
         end
       end
 
       def self.coerce_result(ruby_value, context)
-        dice = ruby_value.downcase.split('d')
-        [{'value': int(dice[0]), 'face': "d"+dice[1]}]
+        ruby_value
       end
     end
   end

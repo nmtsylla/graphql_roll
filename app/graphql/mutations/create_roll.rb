@@ -4,9 +4,10 @@ module Mutations
     field :roll, Types::RollType, null: false
 
     def resolve(dices:)
+      results = Hash Resolvers::RollTheDices.run(dices)
 
       begin
-        roll = Roll.create!(dices_attributes: dices)
+        roll = Roll.create!(results)
         { roll: roll }
       rescue ActiveRecord::RecordInvalid => e
         GraphQL::ExecutionError.new("Invalid attributes for #{e.record.class}:"\

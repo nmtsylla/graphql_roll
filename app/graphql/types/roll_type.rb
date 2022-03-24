@@ -7,5 +7,6 @@ module Types
     field :rolled_at, GraphQL::Types::ISO8601DateTime
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :dices, [Types::DiceType], null: false
   end
 end

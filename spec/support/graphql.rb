@@ -6,7 +6,7 @@ module GraphQLHelpers
   end
 
   def execute_graphql(query, **kwargs)
-    AppSchema.execute(
+    TrustTestSchema.execute(
       query,
       { context: { controller: controller } }.merge(kwargs),
     )

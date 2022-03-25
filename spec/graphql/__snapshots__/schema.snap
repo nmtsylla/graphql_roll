@@ -97,6 +97,7 @@ type Roll {
   id: ID!
   rolledAt: ISO8601DateTime
   total: Float
+  updatedAt: ISO8601DateTime!
 }
 
 """

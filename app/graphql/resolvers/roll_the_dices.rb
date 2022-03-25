@@ -2,13 +2,8 @@ module Resolvers
   class RollTheDices
   
     def self.run(dices)
-      re = Regexp.new('^((\d+)(d|D)(\d+)([+]*))+').freeze
-      raise  'ValidationError: check input'  unless re =~ dices
-      if dices.include?('+')
-        list_dices = dices.split('+').map{|d| d.split('d')}   
-      else 
-        list_dices = [dices.downcase.split('d')]
-      end
+      self.validate(dices)
+      list_dices = self.parse(dices)
       total = 0
       rolls = []
       list_dices.each do |dice|
@@ -20,8 +15,24 @@ module Resolvers
           rolls << {face: "d#{max_value}", value: value}
         end
       end
-      
       {total: total, dices_attributes: rolls}
+    end
+
+    def self.validate(dices)
+      re = Regexp.new('^((\d+)(d|D)(\d+)([+]*))+').freeze
+      raise  'ValidationError: check input'  unless re =~ dices
+    end
+
+    def self.parse(input_string)
+      if input_string.include?('+')
+        list_dices = input_string.split('+').map{|d| d.split('d')}   
+      else 
+        list_dices = [input_string.downcase.split('d')]
+      end
+      list_dices
     end
   end
 end
+
+  
+    
